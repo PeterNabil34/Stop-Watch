@@ -1,0 +1,765 @@
+
+MicrocontrollerInterfacing1_Project.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000004de  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .bss          00000006  00800060  00800060  00000552  2**0
+                  ALLOC
+  2 .stab         00000810  00000000  00000000  00000554  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  3 .stabstr      000007b3  00000000  00000000  00000d64  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 9d 00 	jmp	0x13a	; 0x13a <__vector_1>
+   8:	0c 94 b9 00 	jmp	0x172	; 0x172 <__vector_2>
+   c:	0c 94 e8 00 	jmp	0x1d0	; 0x1d0 <__vector_3>
+  10:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  14:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  18:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  1c:	0c 94 4f 00 	jmp	0x9e	; 0x9e <__vector_7>
+  20:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  24:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  28:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  2c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  30:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  34:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  38:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  3c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  40:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  44:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  48:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  4c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  50:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_clear_bss>:
+  60:	10 e0       	ldi	r17, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	01 c0       	rjmp	.+2      	; 0x6a <.do_clear_bss_start>
+
+00000068 <.do_clear_bss_loop>:
+  68:	1d 92       	st	X+, r1
+
+0000006a <.do_clear_bss_start>:
+  6a:	a6 36       	cpi	r26, 0x66	; 102
+  6c:	b1 07       	cpc	r27, r17
+  6e:	e1 f7       	brne	.-8      	; 0x68 <.do_clear_bss_loop>
+  70:	0e 94 3e 00 	call	0x7c	; 0x7c <main>
+  74:	0c 94 6d 02 	jmp	0x4da	; 0x4da <_exit>
+
+00000078 <__bad_interrupt>:
+  78:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000007c <main>:
+static unsigned char minutes1 = 0;
+static unsigned char hours0 = 0;
+static unsigned char hours1 = 0;
+
+int main(void)
+{
+  7c:	df 93       	push	r29
+  7e:	cf 93       	push	r28
+  80:	cd b7       	in	r28, 0x3d	; 61
+  82:	de b7       	in	r29, 0x3e	; 62
+	IO_Init();
+  84:	0e 94 09 01 	call	0x212	; 0x212 <IO_Init>
+	Timer1_Init();
+  88:	0e 94 4f 01 	call	0x29e	; 0x29e <Timer1_Init>
+	INT0_Init();
+  8c:	0e 94 76 01 	call	0x2ec	; 0x2ec <INT0_Init>
+	INT1_Init();
+  90:	0e 94 92 01 	call	0x324	; 0x324 <INT1_Init>
+	INT2_Init();
+  94:	0e 94 ae 01 	call	0x35c	; 0x35c <INT2_Init>
+
+	while(1)
+	{
+		Stop_Watch_Display();
+  98:	0e 94 ca 01 	call	0x394	; 0x394 <Stop_Watch_Display>
+  9c:	fd cf       	rjmp	.-6      	; 0x98 <main+0x1c>
+
+0000009e <__vector_7>:
+	}
+	return 0;
+}
+
+ISR(TIMER1_COMPA_vect)
+{
+  9e:	1f 92       	push	r1
+  a0:	0f 92       	push	r0
+  a2:	0f b6       	in	r0, 0x3f	; 63
+  a4:	0f 92       	push	r0
+  a6:	11 24       	eor	r1, r1
+  a8:	8f 93       	push	r24
+  aa:	df 93       	push	r29
+  ac:	cf 93       	push	r28
+  ae:	cd b7       	in	r28, 0x3d	; 61
+  b0:	de b7       	in	r29, 0x3e	; 62
+	/*-------------Increment 1 SECOND-------------*/
+	seconds0++;
+  b2:	80 91 60 00 	lds	r24, 0x0060
+  b6:	8f 5f       	subi	r24, 0xFF	; 255
+  b8:	80 93 60 00 	sts	0x0060, r24
+
+	if(seconds0 == 10)
+  bc:	80 91 60 00 	lds	r24, 0x0060
+  c0:	8a 30       	cpi	r24, 0x0A	; 10
+  c2:	39 f4       	brne	.+14     	; 0xd2 <__vector_7+0x34>
+	{
+		seconds1++;
+  c4:	80 91 61 00 	lds	r24, 0x0061
+  c8:	8f 5f       	subi	r24, 0xFF	; 255
+  ca:	80 93 61 00 	sts	0x0061, r24
+		seconds0 = 0;
+  ce:	10 92 60 00 	sts	0x0060, r1
+	}
+	if(seconds1 == 6)
+  d2:	80 91 61 00 	lds	r24, 0x0061
+  d6:	86 30       	cpi	r24, 0x06	; 6
+  d8:	39 f4       	brne	.+14     	; 0xe8 <__vector_7+0x4a>
+	{
+		minutes0++;
+  da:	80 91 62 00 	lds	r24, 0x0062
+  de:	8f 5f       	subi	r24, 0xFF	; 255
+  e0:	80 93 62 00 	sts	0x0062, r24
+		seconds1 = 0;
+  e4:	10 92 61 00 	sts	0x0061, r1
+	}
+	if(minutes0 == 10)
+  e8:	80 91 62 00 	lds	r24, 0x0062
+  ec:	8a 30       	cpi	r24, 0x0A	; 10
+  ee:	39 f4       	brne	.+14     	; 0xfe <__vector_7+0x60>
+	{
+		minutes1++;
+  f0:	80 91 63 00 	lds	r24, 0x0063
+  f4:	8f 5f       	subi	r24, 0xFF	; 255
+  f6:	80 93 63 00 	sts	0x0063, r24
+		minutes0 = 0;
+  fa:	10 92 62 00 	sts	0x0062, r1
+	}
+	if(minutes1 == 6)
+  fe:	80 91 63 00 	lds	r24, 0x0063
+ 102:	86 30       	cpi	r24, 0x06	; 6
+ 104:	39 f4       	brne	.+14     	; 0x114 <__vector_7+0x76>
+	{
+		hours0++;
+ 106:	80 91 64 00 	lds	r24, 0x0064
+ 10a:	8f 5f       	subi	r24, 0xFF	; 255
+ 10c:	80 93 64 00 	sts	0x0064, r24
+		minutes1 = 0;
+ 110:	10 92 63 00 	sts	0x0063, r1
+	}
+	if(hours0 == 10)
+ 114:	80 91 64 00 	lds	r24, 0x0064
+ 118:	8a 30       	cpi	r24, 0x0A	; 10
+ 11a:	39 f4       	brne	.+14     	; 0x12a <__vector_7+0x8c>
+	{
+		hours1++;
+ 11c:	80 91 65 00 	lds	r24, 0x0065
+ 120:	8f 5f       	subi	r24, 0xFF	; 255
+ 122:	80 93 65 00 	sts	0x0065, r24
+		hours0 = 0;
+ 126:	10 92 64 00 	sts	0x0064, r1
+	}
+}
+ 12a:	cf 91       	pop	r28
+ 12c:	df 91       	pop	r29
+ 12e:	8f 91       	pop	r24
+ 130:	0f 90       	pop	r0
+ 132:	0f be       	out	0x3f, r0	; 63
+ 134:	0f 90       	pop	r0
+ 136:	1f 90       	pop	r1
+ 138:	18 95       	reti
+
+0000013a <__vector_1>:
+
+ISR(INT0_vect)
+{
+ 13a:	1f 92       	push	r1
+ 13c:	0f 92       	push	r0
+ 13e:	0f b6       	in	r0, 0x3f	; 63
+ 140:	0f 92       	push	r0
+ 142:	11 24       	eor	r1, r1
+ 144:	df 93       	push	r29
+ 146:	cf 93       	push	r28
+ 148:	cd b7       	in	r28, 0x3d	; 61
+ 14a:	de b7       	in	r29, 0x3e	; 62
+	/*----------Reset The Timer----------*/
+	seconds0 = 0;
+ 14c:	10 92 60 00 	sts	0x0060, r1
+	seconds1 = 0;
+ 150:	10 92 61 00 	sts	0x0061, r1
+
+	minutes0 = 0;
+ 154:	10 92 62 00 	sts	0x0062, r1
+	minutes1 = 0;
+ 158:	10 92 63 00 	sts	0x0063, r1
+
+	hours0 = 0;
+ 15c:	10 92 64 00 	sts	0x0064, r1
+	hours1 = 0;
+ 160:	10 92 65 00 	sts	0x0065, r1
+}
+ 164:	cf 91       	pop	r28
+ 166:	df 91       	pop	r29
+ 168:	0f 90       	pop	r0
+ 16a:	0f be       	out	0x3f, r0	; 63
+ 16c:	0f 90       	pop	r0
+ 16e:	1f 90       	pop	r1
+ 170:	18 95       	reti
+
+00000172 <__vector_2>:
+
+ISR(INT1_vect)
+{
+ 172:	1f 92       	push	r1
+ 174:	0f 92       	push	r0
+ 176:	0f b6       	in	r0, 0x3f	; 63
+ 178:	0f 92       	push	r0
+ 17a:	11 24       	eor	r1, r1
+ 17c:	8f 93       	push	r24
+ 17e:	af 93       	push	r26
+ 180:	bf 93       	push	r27
+ 182:	ef 93       	push	r30
+ 184:	ff 93       	push	r31
+ 186:	df 93       	push	r29
+ 188:	cf 93       	push	r28
+ 18a:	cd b7       	in	r28, 0x3d	; 61
+ 18c:	de b7       	in	r29, 0x3e	; 62
+	/*---------Stop Timer1 (No Clock)---------*/
+	TCCR1B &= ~(1 << CS10);
+ 18e:	ae e4       	ldi	r26, 0x4E	; 78
+ 190:	b0 e0       	ldi	r27, 0x00	; 0
+ 192:	ee e4       	ldi	r30, 0x4E	; 78
+ 194:	f0 e0       	ldi	r31, 0x00	; 0
+ 196:	80 81       	ld	r24, Z
+ 198:	8e 7f       	andi	r24, 0xFE	; 254
+ 19a:	8c 93       	st	X, r24
+	TCCR1B &= ~(1 << CS11);
+ 19c:	ae e4       	ldi	r26, 0x4E	; 78
+ 19e:	b0 e0       	ldi	r27, 0x00	; 0
+ 1a0:	ee e4       	ldi	r30, 0x4E	; 78
+ 1a2:	f0 e0       	ldi	r31, 0x00	; 0
+ 1a4:	80 81       	ld	r24, Z
+ 1a6:	8d 7f       	andi	r24, 0xFD	; 253
+ 1a8:	8c 93       	st	X, r24
+	TCCR1B &= ~(1 << CS12);
+ 1aa:	ae e4       	ldi	r26, 0x4E	; 78
+ 1ac:	b0 e0       	ldi	r27, 0x00	; 0
+ 1ae:	ee e4       	ldi	r30, 0x4E	; 78
+ 1b0:	f0 e0       	ldi	r31, 0x00	; 0
+ 1b2:	80 81       	ld	r24, Z
+ 1b4:	8b 7f       	andi	r24, 0xFB	; 251
+ 1b6:	8c 93       	st	X, r24
+}
+ 1b8:	cf 91       	pop	r28
+ 1ba:	df 91       	pop	r29
+ 1bc:	ff 91       	pop	r31
+ 1be:	ef 91       	pop	r30
+ 1c0:	bf 91       	pop	r27
+ 1c2:	af 91       	pop	r26
+ 1c4:	8f 91       	pop	r24
+ 1c6:	0f 90       	pop	r0
+ 1c8:	0f be       	out	0x3f, r0	; 63
+ 1ca:	0f 90       	pop	r0
+ 1cc:	1f 90       	pop	r1
+ 1ce:	18 95       	reti
+
+000001d0 <__vector_3>:
+
+ISR(INT2_vect)
+{
+ 1d0:	1f 92       	push	r1
+ 1d2:	0f 92       	push	r0
+ 1d4:	0f b6       	in	r0, 0x3f	; 63
+ 1d6:	0f 92       	push	r0
+ 1d8:	11 24       	eor	r1, r1
+ 1da:	8f 93       	push	r24
+ 1dc:	af 93       	push	r26
+ 1de:	bf 93       	push	r27
+ 1e0:	ef 93       	push	r30
+ 1e2:	ff 93       	push	r31
+ 1e4:	df 93       	push	r29
+ 1e6:	cf 93       	push	r28
+ 1e8:	cd b7       	in	r28, 0x3d	; 61
+ 1ea:	de b7       	in	r29, 0x3e	; 62
+	/*-----------Timer1 Resume (Activate The Clock)-----------*/
+	TCCR1B |= (1 << CS12) | (1 << CS10);
+ 1ec:	ae e4       	ldi	r26, 0x4E	; 78
+ 1ee:	b0 e0       	ldi	r27, 0x00	; 0
+ 1f0:	ee e4       	ldi	r30, 0x4E	; 78
+ 1f2:	f0 e0       	ldi	r31, 0x00	; 0
+ 1f4:	80 81       	ld	r24, Z
+ 1f6:	85 60       	ori	r24, 0x05	; 5
+ 1f8:	8c 93       	st	X, r24
+}
+ 1fa:	cf 91       	pop	r28
+ 1fc:	df 91       	pop	r29
+ 1fe:	ff 91       	pop	r31
+ 200:	ef 91       	pop	r30
+ 202:	bf 91       	pop	r27
+ 204:	af 91       	pop	r26
+ 206:	8f 91       	pop	r24
+ 208:	0f 90       	pop	r0
+ 20a:	0f be       	out	0x3f, r0	; 63
+ 20c:	0f 90       	pop	r0
+ 20e:	1f 90       	pop	r1
+ 210:	18 95       	reti
+
+00000212 <IO_Init>:
+
+static void IO_Init(void)
+{
+ 212:	df 93       	push	r29
+ 214:	cf 93       	push	r28
+ 216:	cd b7       	in	r28, 0x3d	; 61
+ 218:	de b7       	in	r29, 0x3e	; 62
+	DDRC |= 0x0F;  //First 4 pins in PORTC are OUTPUT to the 7447 Decoder
+ 21a:	a4 e3       	ldi	r26, 0x34	; 52
+ 21c:	b0 e0       	ldi	r27, 0x00	; 0
+ 21e:	e4 e3       	ldi	r30, 0x34	; 52
+ 220:	f0 e0       	ldi	r31, 0x00	; 0
+ 222:	80 81       	ld	r24, Z
+ 224:	8f 60       	ori	r24, 0x0F	; 15
+ 226:	8c 93       	st	X, r24
+	PORTC &= 0xF0;  //Send 4 ZEROS to the 7447 Decoder
+ 228:	a5 e3       	ldi	r26, 0x35	; 53
+ 22a:	b0 e0       	ldi	r27, 0x00	; 0
+ 22c:	e5 e3       	ldi	r30, 0x35	; 53
+ 22e:	f0 e0       	ldi	r31, 0x00	; 0
+ 230:	80 81       	ld	r24, Z
+ 232:	80 7f       	andi	r24, 0xF0	; 240
+ 234:	8c 93       	st	X, r24
+
+	DDRA |= 0x3F;  //First 6 pins in PORTA are OUTPUT (Enable pins for the six 7 Segments)
+ 236:	aa e3       	ldi	r26, 0x3A	; 58
+ 238:	b0 e0       	ldi	r27, 0x00	; 0
+ 23a:	ea e3       	ldi	r30, 0x3A	; 58
+ 23c:	f0 e0       	ldi	r31, 0x00	; 0
+ 23e:	80 81       	ld	r24, Z
+ 240:	8f 63       	ori	r24, 0x3F	; 63
+ 242:	8c 93       	st	X, r24
+	PORTA |= 0x3F;  //Enable all the six 7 Segments
+ 244:	ab e3       	ldi	r26, 0x3B	; 59
+ 246:	b0 e0       	ldi	r27, 0x00	; 0
+ 248:	eb e3       	ldi	r30, 0x3B	; 59
+ 24a:	f0 e0       	ldi	r31, 0x00	; 0
+ 24c:	80 81       	ld	r24, Z
+ 24e:	8f 63       	ori	r24, 0x3F	; 63
+ 250:	8c 93       	st	X, r24
+
+	DDRD &= ~(1 << PD2); //Button for INT0
+ 252:	a1 e3       	ldi	r26, 0x31	; 49
+ 254:	b0 e0       	ldi	r27, 0x00	; 0
+ 256:	e1 e3       	ldi	r30, 0x31	; 49
+ 258:	f0 e0       	ldi	r31, 0x00	; 0
+ 25a:	80 81       	ld	r24, Z
+ 25c:	8b 7f       	andi	r24, 0xFB	; 251
+ 25e:	8c 93       	st	X, r24
+	PORTD |= (1 << PD2); //Internal Pull Up
+ 260:	a2 e3       	ldi	r26, 0x32	; 50
+ 262:	b0 e0       	ldi	r27, 0x00	; 0
+ 264:	e2 e3       	ldi	r30, 0x32	; 50
+ 266:	f0 e0       	ldi	r31, 0x00	; 0
+ 268:	80 81       	ld	r24, Z
+ 26a:	84 60       	ori	r24, 0x04	; 4
+ 26c:	8c 93       	st	X, r24
+
+	DDRD &= ~(1 << PD3); //Button for INT1
+ 26e:	a1 e3       	ldi	r26, 0x31	; 49
+ 270:	b0 e0       	ldi	r27, 0x00	; 0
+ 272:	e1 e3       	ldi	r30, 0x31	; 49
+ 274:	f0 e0       	ldi	r31, 0x00	; 0
+ 276:	80 81       	ld	r24, Z
+ 278:	87 7f       	andi	r24, 0xF7	; 247
+ 27a:	8c 93       	st	X, r24
+
+	DDRB &= ~(1 << PB2); //Button for INT2
+ 27c:	a7 e3       	ldi	r26, 0x37	; 55
+ 27e:	b0 e0       	ldi	r27, 0x00	; 0
+ 280:	e7 e3       	ldi	r30, 0x37	; 55
+ 282:	f0 e0       	ldi	r31, 0x00	; 0
+ 284:	80 81       	ld	r24, Z
+ 286:	8b 7f       	andi	r24, 0xFB	; 251
+ 288:	8c 93       	st	X, r24
+	PORTB |= (1 << PB2); //Internal Pull Up
+ 28a:	a8 e3       	ldi	r26, 0x38	; 56
+ 28c:	b0 e0       	ldi	r27, 0x00	; 0
+ 28e:	e8 e3       	ldi	r30, 0x38	; 56
+ 290:	f0 e0       	ldi	r31, 0x00	; 0
+ 292:	80 81       	ld	r24, Z
+ 294:	84 60       	ori	r24, 0x04	; 4
+ 296:	8c 93       	st	X, r24
+}
+ 298:	cf 91       	pop	r28
+ 29a:	df 91       	pop	r29
+ 29c:	08 95       	ret
+
+0000029e <Timer1_Init>:
+
+static void Timer1_Init(void)
+{
+ 29e:	df 93       	push	r29
+ 2a0:	cf 93       	push	r28
+ 2a2:	cd b7       	in	r28, 0x3d	; 61
+ 2a4:	de b7       	in	r29, 0x3e	; 62
+	TIMSK |= (1 << OCIE1A); //Enable Module(Timer1 in CTC Mode with OCR1A) Interrupt
+ 2a6:	a9 e5       	ldi	r26, 0x59	; 89
+ 2a8:	b0 e0       	ldi	r27, 0x00	; 0
+ 2aa:	e9 e5       	ldi	r30, 0x59	; 89
+ 2ac:	f0 e0       	ldi	r31, 0x00	; 0
+ 2ae:	80 81       	ld	r24, Z
+ 2b0:	80 61       	ori	r24, 0x10	; 16
+ 2b2:	8c 93       	st	X, r24
+	TCCR1A = (1 << FOC1A); //Disconnect OC1A and OC1B, non-PWM mode
+ 2b4:	ef e4       	ldi	r30, 0x4F	; 79
+ 2b6:	f0 e0       	ldi	r31, 0x00	; 0
+ 2b8:	88 e0       	ldi	r24, 0x08	; 8
+ 2ba:	80 83       	st	Z, r24
+	OCR1A = 1000; // ( 1 second / [ 1 / ( 1 MHz / 64 ) ] ) = 15625
+ 2bc:	ea e4       	ldi	r30, 0x4A	; 74
+ 2be:	f0 e0       	ldi	r31, 0x00	; 0
+ 2c0:	88 ee       	ldi	r24, 0xE8	; 232
+ 2c2:	93 e0       	ldi	r25, 0x03	; 3
+ 2c4:	91 83       	std	Z+1, r25	; 0x01
+ 2c6:	80 83       	st	Z, r24
+	SREG |= (1 << 7);  //Enable Global Interrupt
+ 2c8:	af e5       	ldi	r26, 0x5F	; 95
+ 2ca:	b0 e0       	ldi	r27, 0x00	; 0
+ 2cc:	ef e5       	ldi	r30, 0x5F	; 95
+ 2ce:	f0 e0       	ldi	r31, 0x00	; 0
+ 2d0:	80 81       	ld	r24, Z
+ 2d2:	80 68       	ori	r24, 0x80	; 128
+ 2d4:	8c 93       	st	X, r24
+	TCNT1 = 0;  //Initial Value of Timer1
+ 2d6:	ec e4       	ldi	r30, 0x4C	; 76
+ 2d8:	f0 e0       	ldi	r31, 0x00	; 0
+ 2da:	11 82       	std	Z+1, r1	; 0x01
+ 2dc:	10 82       	st	Z, r1
+	TCCR1B = (1 << WGM12) | (1 << CS12) | (1 << CS10);  //CTC on TOP = OCR1A (Mode 4), Assume Prescaler = 1024
+ 2de:	ee e4       	ldi	r30, 0x4E	; 78
+ 2e0:	f0 e0       	ldi	r31, 0x00	; 0
+ 2e2:	8d e0       	ldi	r24, 0x0D	; 13
+ 2e4:	80 83       	st	Z, r24
+}
+ 2e6:	cf 91       	pop	r28
+ 2e8:	df 91       	pop	r29
+ 2ea:	08 95       	ret
+
+000002ec <INT0_Init>:
+
+static void INT0_Init(void)
+{
+ 2ec:	df 93       	push	r29
+ 2ee:	cf 93       	push	r28
+ 2f0:	cd b7       	in	r28, 0x3d	; 61
+ 2f2:	de b7       	in	r29, 0x3e	; 62
+	SREG |= (1 << 7);  //Enable Global Interrupt
+ 2f4:	af e5       	ldi	r26, 0x5F	; 95
+ 2f6:	b0 e0       	ldi	r27, 0x00	; 0
+ 2f8:	ef e5       	ldi	r30, 0x5F	; 95
+ 2fa:	f0 e0       	ldi	r31, 0x00	; 0
+ 2fc:	80 81       	ld	r24, Z
+ 2fe:	80 68       	ori	r24, 0x80	; 128
+ 300:	8c 93       	st	X, r24
+	MCUCR |= (1 << ISC01);  //Falling Edge
+ 302:	a5 e5       	ldi	r26, 0x55	; 85
+ 304:	b0 e0       	ldi	r27, 0x00	; 0
+ 306:	e5 e5       	ldi	r30, 0x55	; 85
+ 308:	f0 e0       	ldi	r31, 0x00	; 0
+ 30a:	80 81       	ld	r24, Z
+ 30c:	82 60       	ori	r24, 0x02	; 2
+ 30e:	8c 93       	st	X, r24
+	GICR |= (1 << INT0);  //Enable Module(External Interrupt 0) Interrupt
+ 310:	ab e5       	ldi	r26, 0x5B	; 91
+ 312:	b0 e0       	ldi	r27, 0x00	; 0
+ 314:	eb e5       	ldi	r30, 0x5B	; 91
+ 316:	f0 e0       	ldi	r31, 0x00	; 0
+ 318:	80 81       	ld	r24, Z
+ 31a:	80 64       	ori	r24, 0x40	; 64
+ 31c:	8c 93       	st	X, r24
+
+}
+ 31e:	cf 91       	pop	r28
+ 320:	df 91       	pop	r29
+ 322:	08 95       	ret
+
+00000324 <INT1_Init>:
+
+static void INT1_Init(void)
+{
+ 324:	df 93       	push	r29
+ 326:	cf 93       	push	r28
+ 328:	cd b7       	in	r28, 0x3d	; 61
+ 32a:	de b7       	in	r29, 0x3e	; 62
+	SREG |= (1 << 7);  //Enable Global Interrupt
+ 32c:	af e5       	ldi	r26, 0x5F	; 95
+ 32e:	b0 e0       	ldi	r27, 0x00	; 0
+ 330:	ef e5       	ldi	r30, 0x5F	; 95
+ 332:	f0 e0       	ldi	r31, 0x00	; 0
+ 334:	80 81       	ld	r24, Z
+ 336:	80 68       	ori	r24, 0x80	; 128
+ 338:	8c 93       	st	X, r24
+	MCUCR |= (1 << ISC11) | (1 << ISC10);  //Rising Edge (This line must be written before the Enable Module Interrupt line (next line) to not generate an interrupt request according to the default settings (low level: ISC10 = 0 & ISC11 = 0 ))
+ 33a:	a5 e5       	ldi	r26, 0x55	; 85
+ 33c:	b0 e0       	ldi	r27, 0x00	; 0
+ 33e:	e5 e5       	ldi	r30, 0x55	; 85
+ 340:	f0 e0       	ldi	r31, 0x00	; 0
+ 342:	80 81       	ld	r24, Z
+ 344:	8c 60       	ori	r24, 0x0C	; 12
+ 346:	8c 93       	st	X, r24
+	GICR |= (1 << INT1); //Enable Module(External Interrupt 1) Interrupt
+ 348:	ab e5       	ldi	r26, 0x5B	; 91
+ 34a:	b0 e0       	ldi	r27, 0x00	; 0
+ 34c:	eb e5       	ldi	r30, 0x5B	; 91
+ 34e:	f0 e0       	ldi	r31, 0x00	; 0
+ 350:	80 81       	ld	r24, Z
+ 352:	80 68       	ori	r24, 0x80	; 128
+ 354:	8c 93       	st	X, r24
+}
+ 356:	cf 91       	pop	r28
+ 358:	df 91       	pop	r29
+ 35a:	08 95       	ret
+
+0000035c <INT2_Init>:
+
+static void INT2_Init(void)
+{
+ 35c:	df 93       	push	r29
+ 35e:	cf 93       	push	r28
+ 360:	cd b7       	in	r28, 0x3d	; 61
+ 362:	de b7       	in	r29, 0x3e	; 62
+	SREG |= (1 << 7);  //Enable Global Interrupt
+ 364:	af e5       	ldi	r26, 0x5F	; 95
+ 366:	b0 e0       	ldi	r27, 0x00	; 0
+ 368:	ef e5       	ldi	r30, 0x5F	; 95
+ 36a:	f0 e0       	ldi	r31, 0x00	; 0
+ 36c:	80 81       	ld	r24, Z
+ 36e:	80 68       	ori	r24, 0x80	; 128
+ 370:	8c 93       	st	X, r24
+	MCUCSR &= ~(1 << ISC2);  //Falling Edge
+ 372:	a4 e5       	ldi	r26, 0x54	; 84
+ 374:	b0 e0       	ldi	r27, 0x00	; 0
+ 376:	e4 e5       	ldi	r30, 0x54	; 84
+ 378:	f0 e0       	ldi	r31, 0x00	; 0
+ 37a:	80 81       	ld	r24, Z
+ 37c:	8f 7b       	andi	r24, 0xBF	; 191
+ 37e:	8c 93       	st	X, r24
+	GICR |= (1 << INT2); //Enable Module(External Interrupt 2) Interrupt
+ 380:	ab e5       	ldi	r26, 0x5B	; 91
+ 382:	b0 e0       	ldi	r27, 0x00	; 0
+ 384:	eb e5       	ldi	r30, 0x5B	; 91
+ 386:	f0 e0       	ldi	r31, 0x00	; 0
+ 388:	80 81       	ld	r24, Z
+ 38a:	80 62       	ori	r24, 0x20	; 32
+ 38c:	8c 93       	st	X, r24
+}
+ 38e:	cf 91       	pop	r28
+ 390:	df 91       	pop	r29
+ 392:	08 95       	ret
+
+00000394 <Stop_Watch_Display>:
+
+static void Stop_Watch_Display(void)
+{
+ 394:	df 93       	push	r29
+ 396:	cf 93       	push	r28
+ 398:	cd b7       	in	r28, 0x3d	; 61
+ 39a:	de b7       	in	r29, 0x3e	; 62
+	PORTA &= 0xC0;  //Disable all the six 7 Segments
+ 39c:	ab e3       	ldi	r26, 0x3B	; 59
+ 39e:	b0 e0       	ldi	r27, 0x00	; 0
+ 3a0:	eb e3       	ldi	r30, 0x3B	; 59
+ 3a2:	f0 e0       	ldi	r31, 0x00	; 0
+ 3a4:	80 81       	ld	r24, Z
+ 3a6:	80 7c       	andi	r24, 0xC0	; 192
+ 3a8:	8c 93       	st	X, r24
+	PORTC = (PORTC & 0xF0) | (seconds0 & 0x0F);  //Display the units digit of seconds
+ 3aa:	a5 e3       	ldi	r26, 0x35	; 53
+ 3ac:	b0 e0       	ldi	r27, 0x00	; 0
+ 3ae:	e5 e3       	ldi	r30, 0x35	; 53
+ 3b0:	f0 e0       	ldi	r31, 0x00	; 0
+ 3b2:	80 81       	ld	r24, Z
+ 3b4:	98 2f       	mov	r25, r24
+ 3b6:	90 7f       	andi	r25, 0xF0	; 240
+ 3b8:	80 91 60 00 	lds	r24, 0x0060
+ 3bc:	8f 70       	andi	r24, 0x0F	; 15
+ 3be:	89 2b       	or	r24, r25
+ 3c0:	8c 93       	st	X, r24
+	PORTA |= (1 << PA0);  //Enable only the first 7 Segment
+ 3c2:	ab e3       	ldi	r26, 0x3B	; 59
+ 3c4:	b0 e0       	ldi	r27, 0x00	; 0
+ 3c6:	eb e3       	ldi	r30, 0x3B	; 59
+ 3c8:	f0 e0       	ldi	r31, 0x00	; 0
+ 3ca:	80 81       	ld	r24, Z
+ 3cc:	81 60       	ori	r24, 0x01	; 1
+ 3ce:	8c 93       	st	X, r24
+
+	PORTA &= 0xC0;  //Disable all the six 7 Segments
+ 3d0:	ab e3       	ldi	r26, 0x3B	; 59
+ 3d2:	b0 e0       	ldi	r27, 0x00	; 0
+ 3d4:	eb e3       	ldi	r30, 0x3B	; 59
+ 3d6:	f0 e0       	ldi	r31, 0x00	; 0
+ 3d8:	80 81       	ld	r24, Z
+ 3da:	80 7c       	andi	r24, 0xC0	; 192
+ 3dc:	8c 93       	st	X, r24
+	PORTC = (PORTC & 0xF0) | (seconds1 & 0x0F);  //Display the tenth digit of seconds
+ 3de:	a5 e3       	ldi	r26, 0x35	; 53
+ 3e0:	b0 e0       	ldi	r27, 0x00	; 0
+ 3e2:	e5 e3       	ldi	r30, 0x35	; 53
+ 3e4:	f0 e0       	ldi	r31, 0x00	; 0
+ 3e6:	80 81       	ld	r24, Z
+ 3e8:	98 2f       	mov	r25, r24
+ 3ea:	90 7f       	andi	r25, 0xF0	; 240
+ 3ec:	80 91 61 00 	lds	r24, 0x0061
+ 3f0:	8f 70       	andi	r24, 0x0F	; 15
+ 3f2:	89 2b       	or	r24, r25
+ 3f4:	8c 93       	st	X, r24
+	PORTA |= (1 << PA1);  //Enable only the second 7 Segment
+ 3f6:	ab e3       	ldi	r26, 0x3B	; 59
+ 3f8:	b0 e0       	ldi	r27, 0x00	; 0
+ 3fa:	eb e3       	ldi	r30, 0x3B	; 59
+ 3fc:	f0 e0       	ldi	r31, 0x00	; 0
+ 3fe:	80 81       	ld	r24, Z
+ 400:	82 60       	ori	r24, 0x02	; 2
+ 402:	8c 93       	st	X, r24
+
+	PORTA &= 0xC0;  //Disable all the six 7 Segments
+ 404:	ab e3       	ldi	r26, 0x3B	; 59
+ 406:	b0 e0       	ldi	r27, 0x00	; 0
+ 408:	eb e3       	ldi	r30, 0x3B	; 59
+ 40a:	f0 e0       	ldi	r31, 0x00	; 0
+ 40c:	80 81       	ld	r24, Z
+ 40e:	80 7c       	andi	r24, 0xC0	; 192
+ 410:	8c 93       	st	X, r24
+	PORTC = (PORTC & 0xF0) | (minutes0 & 0x0F);  //Display the units digit of minutes
+ 412:	a5 e3       	ldi	r26, 0x35	; 53
+ 414:	b0 e0       	ldi	r27, 0x00	; 0
+ 416:	e5 e3       	ldi	r30, 0x35	; 53
+ 418:	f0 e0       	ldi	r31, 0x00	; 0
+ 41a:	80 81       	ld	r24, Z
+ 41c:	98 2f       	mov	r25, r24
+ 41e:	90 7f       	andi	r25, 0xF0	; 240
+ 420:	80 91 62 00 	lds	r24, 0x0062
+ 424:	8f 70       	andi	r24, 0x0F	; 15
+ 426:	89 2b       	or	r24, r25
+ 428:	8c 93       	st	X, r24
+	PORTA |= (1 << PA2);  //Enable only the third 7 Segment
+ 42a:	ab e3       	ldi	r26, 0x3B	; 59
+ 42c:	b0 e0       	ldi	r27, 0x00	; 0
+ 42e:	eb e3       	ldi	r30, 0x3B	; 59
+ 430:	f0 e0       	ldi	r31, 0x00	; 0
+ 432:	80 81       	ld	r24, Z
+ 434:	84 60       	ori	r24, 0x04	; 4
+ 436:	8c 93       	st	X, r24
+
+	PORTA &= 0xC0;  //Disable all the six 7 Segments
+ 438:	ab e3       	ldi	r26, 0x3B	; 59
+ 43a:	b0 e0       	ldi	r27, 0x00	; 0
+ 43c:	eb e3       	ldi	r30, 0x3B	; 59
+ 43e:	f0 e0       	ldi	r31, 0x00	; 0
+ 440:	80 81       	ld	r24, Z
+ 442:	80 7c       	andi	r24, 0xC0	; 192
+ 444:	8c 93       	st	X, r24
+	PORTC = (PORTC & 0xF0) | (minutes1 & 0x0F);  //Display the tenth digit of minutes
+ 446:	a5 e3       	ldi	r26, 0x35	; 53
+ 448:	b0 e0       	ldi	r27, 0x00	; 0
+ 44a:	e5 e3       	ldi	r30, 0x35	; 53
+ 44c:	f0 e0       	ldi	r31, 0x00	; 0
+ 44e:	80 81       	ld	r24, Z
+ 450:	98 2f       	mov	r25, r24
+ 452:	90 7f       	andi	r25, 0xF0	; 240
+ 454:	80 91 63 00 	lds	r24, 0x0063
+ 458:	8f 70       	andi	r24, 0x0F	; 15
+ 45a:	89 2b       	or	r24, r25
+ 45c:	8c 93       	st	X, r24
+	PORTA |= (1 << PA3);  //Enable only the fourth 7 Segment
+ 45e:	ab e3       	ldi	r26, 0x3B	; 59
+ 460:	b0 e0       	ldi	r27, 0x00	; 0
+ 462:	eb e3       	ldi	r30, 0x3B	; 59
+ 464:	f0 e0       	ldi	r31, 0x00	; 0
+ 466:	80 81       	ld	r24, Z
+ 468:	88 60       	ori	r24, 0x08	; 8
+ 46a:	8c 93       	st	X, r24
+
+	PORTA &= 0xC0;  //Disable all the six 7 Segments
+ 46c:	ab e3       	ldi	r26, 0x3B	; 59
+ 46e:	b0 e0       	ldi	r27, 0x00	; 0
+ 470:	eb e3       	ldi	r30, 0x3B	; 59
+ 472:	f0 e0       	ldi	r31, 0x00	; 0
+ 474:	80 81       	ld	r24, Z
+ 476:	80 7c       	andi	r24, 0xC0	; 192
+ 478:	8c 93       	st	X, r24
+	PORTC = (PORTC & 0xF0) | (hours0 & 0x0F);  //Display the units digit of hours
+ 47a:	a5 e3       	ldi	r26, 0x35	; 53
+ 47c:	b0 e0       	ldi	r27, 0x00	; 0
+ 47e:	e5 e3       	ldi	r30, 0x35	; 53
+ 480:	f0 e0       	ldi	r31, 0x00	; 0
+ 482:	80 81       	ld	r24, Z
+ 484:	98 2f       	mov	r25, r24
+ 486:	90 7f       	andi	r25, 0xF0	; 240
+ 488:	80 91 64 00 	lds	r24, 0x0064
+ 48c:	8f 70       	andi	r24, 0x0F	; 15
+ 48e:	89 2b       	or	r24, r25
+ 490:	8c 93       	st	X, r24
+	PORTA |= (1 << PA4);  //Enable only the fifth 7 Segment
+ 492:	ab e3       	ldi	r26, 0x3B	; 59
+ 494:	b0 e0       	ldi	r27, 0x00	; 0
+ 496:	eb e3       	ldi	r30, 0x3B	; 59
+ 498:	f0 e0       	ldi	r31, 0x00	; 0
+ 49a:	80 81       	ld	r24, Z
+ 49c:	80 61       	ori	r24, 0x10	; 16
+ 49e:	8c 93       	st	X, r24
+
+	PORTA &= 0xC0;  //Disable all the six 7 Segments
+ 4a0:	ab e3       	ldi	r26, 0x3B	; 59
+ 4a2:	b0 e0       	ldi	r27, 0x00	; 0
+ 4a4:	eb e3       	ldi	r30, 0x3B	; 59
+ 4a6:	f0 e0       	ldi	r31, 0x00	; 0
+ 4a8:	80 81       	ld	r24, Z
+ 4aa:	80 7c       	andi	r24, 0xC0	; 192
+ 4ac:	8c 93       	st	X, r24
+	PORTC = (PORTC & 0xF0) | (hours1 & 0x0F);  //Display the tenth digit of hours
+ 4ae:	a5 e3       	ldi	r26, 0x35	; 53
+ 4b0:	b0 e0       	ldi	r27, 0x00	; 0
+ 4b2:	e5 e3       	ldi	r30, 0x35	; 53
+ 4b4:	f0 e0       	ldi	r31, 0x00	; 0
+ 4b6:	80 81       	ld	r24, Z
+ 4b8:	98 2f       	mov	r25, r24
+ 4ba:	90 7f       	andi	r25, 0xF0	; 240
+ 4bc:	80 91 65 00 	lds	r24, 0x0065
+ 4c0:	8f 70       	andi	r24, 0x0F	; 15
+ 4c2:	89 2b       	or	r24, r25
+ 4c4:	8c 93       	st	X, r24
+	PORTA |= (1 << PA5);  //Enable only the sixth 7 Segment
+ 4c6:	ab e3       	ldi	r26, 0x3B	; 59
+ 4c8:	b0 e0       	ldi	r27, 0x00	; 0
+ 4ca:	eb e3       	ldi	r30, 0x3B	; 59
+ 4cc:	f0 e0       	ldi	r31, 0x00	; 0
+ 4ce:	80 81       	ld	r24, Z
+ 4d0:	80 62       	ori	r24, 0x20	; 32
+ 4d2:	8c 93       	st	X, r24
+}
+ 4d4:	cf 91       	pop	r28
+ 4d6:	df 91       	pop	r29
+ 4d8:	08 95       	ret
+
+000004da <_exit>:
+ 4da:	f8 94       	cli
+
+000004dc <__stop_program>:
+ 4dc:	ff cf       	rjmp	.-2      	; 0x4dc <__stop_program>
